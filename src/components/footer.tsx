@@ -1,4 +1,5 @@
 import { Mail, MapPin, Phone } from "lucide-react";
+import Image from "next/image";
 import type React from "react";
 
 const Footer: React.FC = () => {
@@ -7,7 +8,16 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           <div>
-            <h3 className="mb-4 text-2xl font-bold text-orange-400">Атанас Маринов</h3>
+            <div className="mb-4 flex items-center">
+              <Image
+                src="/images/logo.png"
+                alt="Атанас Маринов лого"
+                width={50}
+                height={38}
+                className="mr-3 opacity-90"
+              />
+              <h3 className="text-2xl font-bold text-orange-400">Атанас Маринов</h3>
+            </div>
             <p className="mb-4 text-slate-300">
               Професионални довършителни ремонти и строителство с гаранция за качество.
             </p>
