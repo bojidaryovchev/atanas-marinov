@@ -1,35 +1,36 @@
-import { Hammer, Layers, PaintBucket, Star, Wrench } from "lucide-react";
+import { Star } from "lucide-react";
 import type React from "react";
 import ServicesClient from "./services-client";
 
-interface Service {
-  icon: React.ComponentType<{ className?: string }>;
+interface ServiceItem {
+  icon: string;
   title: string;
   description: string;
   features: string[];
 }
 
-const services: Service[] = [
+// Convert component references to string identifiers
+const services: ServiceItem[] = [
   {
-    icon: Layers,
+    icon: "Layers",
     title: "Гипсов картон",
     description: "Монтаж на гипсокартонени конструкции, преградни стени, окачени тавани и декоративни елементи.",
     features: ["Преградни стени", "Окачени тавани", "Декоративни елементи", "Звукоизолация"],
   },
   {
-    icon: PaintBucket,
+    icon: "PaintBucket",
     title: "Шпакловки и боядисване",
     description: "Професионални шпакловки, грундиране и боядисване с висококачествени латексови бои.",
     features: ["Фина шпакловка", "Латексови бои", "Грундиране", "Декоративни техники"],
   },
   {
-    icon: Hammer,
+    icon: "Hammer",
     title: "Довършителни работи",
     description: "Пълен спектър от довършителни строителни работи за жилищни и офис сгради.",
     features: ["Подови настилки", "Плочки", "Електрически инсталации", "ВиК работи"],
   },
   {
-    icon: Wrench,
+    icon: "Wrench",
     title: "Ремонти и поддръжка",
     description: "Цялостни ремонти на апартаменти, офиси и търговски обекти с гаранция за качество.",
     features: ["Цялостни ремонти", "Частични ремонти", "Поддръжка", "Спешни ремонти"],

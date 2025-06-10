@@ -1,20 +1,28 @@
 "use client";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, Hammer, Layers, PaintBucket, Wrench } from "lucide-react";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 
-interface Service {
-  icon: React.ComponentType<{ className?: string }>;
+interface ServiceItem {
+  icon: string;
   title: string;
   description: string;
   features: string[];
 }
 
 interface Props {
-  services: Service[];
+  services: ServiceItem[];
 }
+
+// Map of icon names to components
+const iconMap = {
+  Layers,
+  PaintBucket,
+  Hammer,
+  Wrench,
+};
 
 const ServicesClient: React.FC<Props> = ({ services }) => {
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
@@ -42,6 +50,12 @@ const ServicesClient: React.FC<Props> = ({ services }) => {
     return () => observer.disconnect();
   }, [visibleCards]);
 
+  // Function to get the icon component based on the icon name
+  const getIconComponent = (iconName: string) => {
+    const IconComponent = iconMap[iconName as keyof typeof iconMap];
+    return IconComponent ? <IconComponent className="h-10 w-10 text-orange-600" /> : null;
+  };
+
   return (
     <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
       {services.map((service, index) => (
@@ -51,7 +65,7 @@ const ServicesClient: React.FC<Props> = ({ services }) => {
         >
           <CardHeader className="pt-8 pb-6 text-center">
             <div className="mx-auto mb-6 w-fit rounded-2xl bg-gradient-to-br from-orange-100 to-amber-100 p-4 transition-transform duration-300 group-hover:scale-110">
-              <service.icon className="h-10 w-10 text-orange-600" />
+              {getIconComponent(service.icon)}
             </div>
             <CardTitle className="text-2xl font-bold tracking-tight text-slate-900">{service.title}</CardTitle>
           </CardHeader>
