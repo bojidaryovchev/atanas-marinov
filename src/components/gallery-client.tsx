@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import Image from "next/image";
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface Props {
   images: string[];
@@ -15,36 +15,36 @@ const GalleryClient: React.FC<Props> = ({ images }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalImageIndex, setModalImageIndex] = useState<number>(0);
 
-  const nextSlide = (): void => {
+  const nextSlide = useCallback((): void => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
+  }, [images.length]);
 
-  const prevSlide = (): void => {
+  const prevSlide = useCallback((): void => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
-  };
+  }, [images.length]);
 
-  const openModal = (index: number): void => {
+  const openModal = useCallback((index: number): void => {
     setModalImageIndex(index);
     setIsModalOpen(true);
-  };
+  }, []);
 
-  const closeModal = (): void => {
+  const closeModal = useCallback((): void => {
     setIsModalOpen(false);
-  };
+  }, []);
 
-  const nextModalImage = (): void => {
+  const nextModalImage = useCallback((): void => {
     setModalImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
+  }, [images.length]);
 
-  const prevModalImage = (): void => {
+  const prevModalImage = useCallback((): void => {
     setModalImageIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
-  };
+  }, [images.length]);
 
   // Auto-play functionality
   useEffect(() => {
     const interval = setInterval(nextSlide, 4000);
     return () => clearInterval(interval);
-  }, []);
+  }, [nextSlide]);
 
   // Handle keyboard navigation in modal
   useEffect(() => {
@@ -58,7 +58,7 @@ const GalleryClient: React.FC<Props> = ({ images }) => {
 
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [isModalOpen]);
+  }, [isModalOpen, prevModalImage, nextModalImage, closeModal]);
 
   return (
     <>
