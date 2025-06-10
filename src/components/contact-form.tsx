@@ -5,34 +5,88 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { contactFormSchema, type ContactFormData } from "@/lib/validations";
 import { Send } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-
-interface FormData {
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
-}
+import { z } from "zod";
 
 const ContactForm: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
     phone: "",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // Clear error for this field when user starts typing
+    if (errors[name as keyof ContactFormData]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
+  };
+
+  const validateField = (fieldName: keyof ContactFormData, value: string): string | undefined => {
+    try {
+      const fieldSchema = contactFormSchema.shape[fieldName];
+      fieldSchema.parse(value);
+      return undefined;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return error.errors[0]?.message;
+      }
+      return undefined;
+    }
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
+    const { name, value } = e.target;
+    const error = validateField(name as keyof ContactFormData, value);
+
+    if (error) {
+      setErrors((prev) => ({ ...prev, [name]: error }));
+    }
+  };
+
+  const validateForm = (): boolean => {
+    try {
+      contactFormSchema.parse(formData);
+      setErrors({});
+      return true;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const newErrors: Partial<Record<keyof ContactFormData, string>> = {};
+        error.errors.forEach((err) => {
+          if (err.path[0]) {
+            newErrors[err.path[0] as keyof ContactFormData] = err.message;
+          }
+        });
+        setErrors(newErrors);
+
+        // Show toast with first error
+        const firstError = error.errors[0];
+        if (firstError) {
+          toast.error(firstError.message);
+        }
+      }
+      return false;
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
+
+    // Validate form before submission
+    if (!validateForm()) {
+      return;
+    }
+
     setIsSubmitting(true);
 
     // Show loading toast
@@ -59,6 +113,7 @@ const ContactForm: React.FC = () => {
 
         // Reset form
         setFormData({ name: "", email: "", phone: "", message: "" });
+        setErrors({});
       } else {
         throw new Error("Failed to submit form");
       }
@@ -92,10 +147,13 @@ const ContactForm: React.FC = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
+                onBlur={handleBlur}
                 placeholder="Вашето име"
                 required
                 disabled={isSubmitting}
+                className={errors.name ? "border-red-500 focus:border-red-500" : ""}
               />
+              {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
             </div>
             <div className="space-y-2">
               <Label htmlFor="phone">Телефон *</Label>
@@ -105,10 +163,13 @@ const ContactForm: React.FC = () => {
                 type="tel"
                 value={formData.phone}
                 onChange={handleInputChange}
+                onBlur={handleBlur}
                 placeholder="+359 XXX XXX XXX"
                 required
                 disabled={isSubmitting}
+                className={errors.phone ? "border-red-500 focus:border-red-500" : ""}
               />
+              {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone}</p>}
             </div>
           </div>
 
@@ -120,9 +181,12 @@ const ContactForm: React.FC = () => {
               type="email"
               value={formData.email}
               onChange={handleInputChange}
+              onBlur={handleBlur}
               placeholder="your@email.com"
               disabled={isSubmitting}
+              className={errors.email ? "border-red-500 focus:border-red-500" : ""}
             />
+            {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
           </div>
 
           <div className="space-y-2">
@@ -132,17 +196,21 @@ const ContactForm: React.FC = () => {
               name="message"
               value={formData.message}
               onChange={handleInputChange}
+              onBlur={handleBlur}
               placeholder="Опишете вашия проект или въпрос..."
               rows={5}
               required
               disabled={isSubmitting}
+              className={errors.message ? "border-red-500 focus:border-red-500" : ""}
             />
+            {errors.message && <p className="mt-1 text-sm text-red-600">{errors.message}</p>}
+            <p className="mt-1 text-xs text-slate-500">{formData.message.length}/1000 символа</p>
           </div>
 
           <Button
             type="submit"
             className="w-full bg-orange-600 py-3 text-lg font-semibold text-white transition-all duration-300 hover:bg-orange-700 disabled:cursor-not-allowed disabled:opacity-50"
-            disabled={isSubmitting}
+            disabled={isSubmitting || Object.keys(errors).some((key) => errors[key as keyof ContactFormData])}
           >
             {isSubmitting ? (
               <>
