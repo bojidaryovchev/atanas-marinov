@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Send } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 interface FormData {
   name: string;
@@ -15,8 +16,6 @@ interface FormData {
   phone: string;
   message: string;
 }
-
-type SubmitStatus = "idle" | "success" | "error";
 
 const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -26,7 +25,6 @@ const ContactForm: React.FC = () => {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>("idle");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     const { name, value } = e.target;
@@ -36,6 +34,9 @@ const ContactForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    // Show loading toast
+    const loadingToast = toast.loading("Изпращане на съобщението...");
 
     try {
       const response = await fetch("/api/contact", {
@@ -47,16 +48,31 @@ const ContactForm: React.FC = () => {
       });
 
       if (response.ok) {
-        setSubmitStatus("success");
+        // Dismiss loading toast and show success
+        toast.dismiss(loadingToast);
+        toast.success(
+          "Благодарим ви! Вашето съобщение беше изпратено успешно. Ще се свържем с вас в най-кратък срок.",
+          {
+            duration: 6000,
+          },
+        );
+
+        // Reset form
         setFormData({ name: "", email: "", phone: "", message: "" });
       } else {
-        setSubmitStatus("error");
+        throw new Error("Failed to submit form");
       }
     } catch {
-      setSubmitStatus("error");
+      // Dismiss loading toast and show error
+      toast.dismiss(loadingToast);
+      toast.error(
+        "Възникна грешка при изпращането на съобщението. Моля, опитайте отново или се свържете с нас директно по телефона.",
+        {
+          duration: 6000,
+        },
+      );
     } finally {
       setIsSubmitting(false);
-      setTimeout(() => setSubmitStatus("idle"), 5000);
     }
   };
 
@@ -78,6 +94,7 @@ const ContactForm: React.FC = () => {
                 onChange={handleInputChange}
                 placeholder="Вашето име"
                 required
+                disabled={isSubmitting}
               />
             </div>
             <div className="space-y-2">
@@ -90,6 +107,7 @@ const ContactForm: React.FC = () => {
                 onChange={handleInputChange}
                 placeholder="+359 XXX XXX XXX"
                 required
+                disabled={isSubmitting}
               />
             </div>
           </div>
@@ -103,6 +121,7 @@ const ContactForm: React.FC = () => {
               value={formData.email}
               onChange={handleInputChange}
               placeholder="your@email.com"
+              disabled={isSubmitting}
             />
           </div>
 
@@ -116,16 +135,20 @@ const ContactForm: React.FC = () => {
               placeholder="Опишете вашия проект или въпрос..."
               rows={5}
               required
+              disabled={isSubmitting}
             />
           </div>
 
           <Button
             type="submit"
-            className="w-full bg-orange-600 py-3 text-lg font-semibold text-white hover:bg-orange-700"
+            className="w-full bg-orange-600 py-3 text-lg font-semibold text-white transition-all duration-300 hover:bg-orange-700 disabled:cursor-not-allowed disabled:opacity-50"
             disabled={isSubmitting}
           >
             {isSubmitting ? (
-              "Изпращане..."
+              <>
+                <div className="mr-2 h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+                Изпращане...
+              </>
             ) : (
               <>
                 <Send className="mr-2 h-5 w-5" />
@@ -133,18 +156,6 @@ const ContactForm: React.FC = () => {
               </>
             )}
           </Button>
-
-          {submitStatus === "success" && (
-            <div className="rounded-lg border border-green-400 bg-green-100 p-4 text-green-700">
-              Благодарим ви! Вашето съобщение беше изпратено успешно.
-            </div>
-          )}
-
-          {submitStatus === "error" && (
-            <div className="rounded-lg border border-red-400 bg-red-100 p-4 text-red-700">
-              Възникна грешка при изпращането. Моля, опитайте отново.
-            </div>
-          )}
         </form>
       </CardContent>
     </Card>
