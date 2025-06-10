@@ -21,7 +21,7 @@ const Contact: React.FC = () => {
               <h3 className="mb-6 text-2xl font-bold text-white">Контактна информация</h3>
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
-                  <div className="rounded-lg bg-orange-600 p-3">
+                  <div className="flex-shrink-0 rounded-lg bg-orange-600 p-3">
                     <Phone className="h-6 w-6 text-white" />
                   </div>
                   <div>
@@ -32,7 +32,7 @@ const Contact: React.FC = () => {
                 </div>
 
                 <div className="flex items-start space-x-4">
-                  <div className="rounded-lg bg-orange-600 p-3">
+                  <div className="flex-shrink-0 rounded-lg bg-orange-600 p-3">
                     <Mail className="h-6 w-6 text-white" />
                   </div>
                   <div>
@@ -43,7 +43,7 @@ const Contact: React.FC = () => {
                 </div>
 
                 <div className="flex items-start space-x-4">
-                  <div className="rounded-lg bg-orange-600 p-3">
+                  <div className="flex-shrink-0 rounded-lg bg-orange-600 p-3">
                     <MapPin className="h-6 w-6 text-white" />
                   </div>
                   <div>
@@ -54,7 +54,7 @@ const Contact: React.FC = () => {
                 </div>
 
                 <div className="flex items-start space-x-4">
-                  <div className="rounded-lg bg-orange-600 p-3">
+                  <div className="flex-shrink-0 rounded-lg bg-orange-600 p-3">
                     <Clock className="h-6 w-6 text-white" />
                   </div>
                   <div>
@@ -77,19 +77,19 @@ const Contact: React.FC = () => {
               <CardContent>
                 <ul className="space-y-2 text-slate-300">
                   <li className="flex items-center">
-                    <div className="mr-3 h-2 w-2 rounded-full bg-orange-500"></div>
+                    <div className="mr-3 h-2 w-2 flex-shrink-0 rounded-full bg-orange-500"></div>
                     Безплатен оглед на обекта
                   </li>
                   <li className="flex items-center">
-                    <div className="mr-3 h-2 w-2 rounded-full bg-orange-500"></div>
+                    <div className="mr-3 h-2 w-2 flex-shrink-0 rounded-full bg-orange-500"></div>
                     Детайлна оферта с цени
                   </li>
                   <li className="flex items-center">
-                    <div className="mr-3 h-2 w-2 rounded-full bg-orange-500"></div>
+                    <div className="mr-3 h-2 w-2 flex-shrink-0 rounded-full bg-orange-500"></div>
                     Консултация за материали
                   </li>
                   <li className="flex items-center">
-                    <div className="mr-3 h-2 w-2 rounded-full bg-orange-500"></div>
+                    <div className="mr-3 h-2 w-2 flex-shrink-0 rounded-full bg-orange-500"></div>
                     Планиране на сроковете
                   </li>
                 </ul>
