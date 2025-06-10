@@ -4,7 +4,7 @@ Allow: /
 # Sitemap
 Sitemap: https://atanasmarinov-eood.com/sitemap.xml
 
-# Block access to admin areas (if any)
+# Block access to certain areas
 Disallow: /api/
 
 # Allow search engines to crawl images
