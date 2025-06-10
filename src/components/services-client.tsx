@@ -74,7 +74,7 @@ const ServicesClient: React.FC<Props> = ({ services }) => {
             <ul className="space-y-2">
               {service.features.map((feature, featureIndex) => (
                 <li key={featureIndex} className="flex items-center text-sm text-slate-700">
-                  <CheckCircle className="mr-2 h-4 w-4 flex-shrink-0 text-green-500" />
+                  <CheckCircle className="mr-2 h-4 w-4 shrink-0 text-green-500" />
                   {feature}
                 </li>
               ))}

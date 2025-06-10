@@ -43,23 +43,23 @@ const About: React.FC = () => {
               <h3 className="mb-4 text-2xl font-bold text-slate-800">Защо да изберете нас?</h3>
               <ul className="space-y-4">
                 <li className="flex items-start">
-                  <div className="mt-2 mr-3 h-2 w-2 flex-shrink-0 rounded-full bg-orange-500"></div>
+                  <div className="mt-2 mr-3 h-2 w-2 shrink-0 rounded-full bg-orange-500"></div>
                   <span className="text-slate-700">Професионално изпълнение с внимание към детайлите</span>
                 </li>
                 <li className="flex items-start">
-                  <div className="mt-2 mr-3 h-2 w-2 flex-shrink-0 rounded-full bg-orange-500"></div>
+                  <div className="mt-2 mr-3 h-2 w-2 shrink-0 rounded-full bg-orange-500"></div>
                   <span className="text-slate-700">Използване на висококачествени материали</span>
                 </li>
                 <li className="flex items-start">
-                  <div className="mt-2 mr-3 h-2 w-2 flex-shrink-0 rounded-full bg-orange-500"></div>
+                  <div className="mt-2 mr-3 h-2 w-2 shrink-0 rounded-full bg-orange-500"></div>
                   <span className="text-slate-700">Спазване на договорените срокове</span>
                 </li>
                 <li className="flex items-start">
-                  <div className="mt-2 mr-3 h-2 w-2 flex-shrink-0 rounded-full bg-orange-500"></div>
+                  <div className="mt-2 mr-3 h-2 w-2 shrink-0 rounded-full bg-orange-500"></div>
                   <span className="text-slate-700">Конкурентни цени и прозрачност</span>
                 </li>
                 <li className="flex items-start">
-                  <div className="mt-2 mr-3 h-2 w-2 flex-shrink-0 rounded-full bg-orange-500"></div>
+                  <div className="mt-2 mr-3 h-2 w-2 shrink-0 rounded-full bg-orange-500"></div>
                   <span className="text-slate-700">Гаранция за всички извършени работи</span>
                 </li>
               </ul>
