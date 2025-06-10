@@ -4,6 +4,12 @@
 // Utility function to determine if the stage is production
 const isProd = (stage: string) => stage.startsWith("prod");
 
+// Interface for additional email identities
+interface Identity {
+  name: string;
+  sender: string;
+}
+
 export default $config({
   app(input) {
     return {
@@ -18,6 +24,23 @@ export default $config({
     // Determine the domain name based on the deployment stage
     const domainName = isProd($app.stage) ? "atanasmarinov-eood.com" : `${$app.stage}.atanasmarinov-eood.com`;
 
+    // Create a SES domain identity with DMARC policy for email sending
+    const domainIdentity = new sst.aws.Email("NextEmail", {
+      sender: domainName,
+      dmarc: "v=DMARC1; p=quarantine; adkim=s; aspf=s;",
+    });
+
+    const emailIdentities: Identity[] = [{ name: "BojidarYovchevScience", sender: "bojidaryovchevscience@gmail.com" }];
+
+    const identities = [
+      domainIdentity,
+      ...emailIdentities.map((identity) =>
+        isProd($app.stage)
+          ? sst.aws.Email.get(identity.name, identity.sender)
+          : new sst.aws.Email(identity.name, { sender: identity.sender }),
+      ),
+    ];
+
     // Deploy the Next.js application with specified domain
     new sst.aws.Nextjs("NextApp", {
       domain: {
@@ -26,6 +49,7 @@ export default $config({
           zone: "Z05347541A8EFUI3RFC43",
         }),
       },
+      link: [...identities],
     });
   },
 });
