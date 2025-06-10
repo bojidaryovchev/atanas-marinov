@@ -1,3 +1,4 @@
+import PreloadImages from "@/components/preload-images";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import type React from "react";
@@ -31,6 +32,7 @@ export const metadata: Metadata = {
 const RootLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <html lang="en" className="scroll-smooth">
+      <PreloadImages />
       <body className={`${inter.className} antialiased`}>
         {children}
         <Toaster
