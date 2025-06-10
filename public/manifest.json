@@ -1,0 +1,16 @@
+{
+  "name": "Атанас Маринов - Довършителни ремонти",
+  "short_name": "Атанас Маринов",
+  "description": "Професионални довършителни ремонти, гипсов картон, окачени тавани, шпакловки и боядисване в Пловдив",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1e293b",
+  "theme_color": "#ea580c",
+  "icons": [
+    {
+      "src": "/images/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

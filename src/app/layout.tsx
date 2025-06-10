@@ -9,15 +9,55 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Атанас Маринов - Довършителни ремонти",
-  description: `Довършителни ремонти, гипсов картон, окачени тавани, шпакловки, латекс и много други услуги`,
-  keywords: "Довършителни ремонти, гипсов картон, окачени тавани, шпакловки, латекс, други",
+  title: "Атанас Маринов - Довършителни ремонти | Пловдив",
+  description:
+    "Професионални довършителни ремонти, гипсов картон, окачени тавани, шпакловки и боядисване в Пловдив. Над 10 години опит. Безплатна оценка.",
+  keywords:
+    "довършителни ремонти, гипсов картон, окачени тавани, шпакловки, боядисване, Пловдив, строителство, ремонти",
   authors: [{ name: "Атанас Маринов" }],
-  openGraph: {
-    title: "Атанас Маринов - Довършителни ремонти",
-    description: `Довършителни ремонти, гипсов картон, окачени тавани, шпакловки, латекс и много други услуги`,
-    type: "website",
+  creator: "Атанас Маринов",
+  publisher: "Атанас Маринов",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
+  openGraph: {
+    type: "website",
+    locale: "bg_BG",
+    url: "https://atanasmarinov-eood.com",
+    title: "Атанас Маринов - Довършителни ремонти | Пловдив",
+    description:
+      "Професионални довършителни ремонти, гипсов картон, окачени тавани, шпакловки и боядисване в Пловдив. Над 10 години опит.",
+    siteName: "Атанас Маринов",
+    images: [
+      {
+        url: "https://atanasmarinov-eood.com/images/logo.png",
+        width: 1024,
+        height: 1024,
+        alt: "Атанас Маринов - Довършителни ремонти",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Атанас Маринов - Довършителни ремонти | Пловдив",
+    description: "Професионални довършителни ремонти в Пловдив. Над 10 години опит.",
+    images: ["https://atanasmarinov-eood.com/images/logo.png"],
+  },
+  alternates: {
+    canonical: "https://atanasmarinov-eood.com",
+  },
+  verification: {
+    google: "0OhZpQnPCOuHK5KDSSMHIhCauph0csDFumDRheV7DCs",
+  },
+  category: "construction",
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
