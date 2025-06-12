@@ -13,7 +13,7 @@ interface Identity {
 export default $config({
   app(input) {
     return {
-      name: "aws-nextjs",
+      name: "atanasmarinov-eood-com",
       removal: isProd(input.stage) ? "retain" : "remove",
       home: "aws",
     };
