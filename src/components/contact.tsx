@@ -37,7 +37,7 @@ const Contact: React.FC = () => {
                   </div>
                   <div>
                     <h4 className="text-lg font-semibold text-white">Имейл</h4>
-                    <p className="text-slate-300">atanas.marinov@example.com</p>
+                    <p className="text-slate-300">atanasmarinoveood@gmail.com</p>
                     <p className="text-sm text-slate-400">Отговаряме в рамките на 24 часа</p>
                   </div>
                 </div>

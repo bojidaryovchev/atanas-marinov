@@ -23,7 +23,7 @@ const structuredData = {
   description: "Професионални довършителни ремонти, гипсов картон, окачени тавани, шпакловки и боядисване",
   url: "https://atanasmarinov-eood.com",
   telephone: "+359892941814",
-  email: "atanas.marinov@example.com",
+  email: "atanasmarinoveood@gmail.com",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Пловдив",

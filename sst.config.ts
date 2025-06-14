@@ -30,7 +30,7 @@ export default $config({
       dmarc: "v=DMARC1; p=quarantine; adkim=s; aspf=s;",
     });
 
-    const emailIdentities: Identity[] = [{ name: "BojidarYovchevScience", sender: "bojidaryovchevscience@gmail.com" }];
+    const emailIdentities: Identity[] = [{ name: "AtanasMarinovEOOD", sender: "atanasmarinoveood@gmail.com" }];
 
     const identities = [
       domainIdentity,
